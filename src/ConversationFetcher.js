@@ -6,8 +6,9 @@ import * as openpgp from 'openpgp';
 export default class ConversationsFetcher {
     _headers: any;
     _privateKey: string;
+    _logger: (msg: string) => any;
     static BASE_URL: string = 'https://mail.protonmail.com/api';
-    constructor(cookie: any, sessionId: string, privateKey: string) {
+    constructor(cookie: any, sessionId: string, privateKey: string, logger: (msg: string) => any) {
         this._headers = {
             cookie,
             'x-pm-apiversion': '1',
@@ -15,13 +16,24 @@ export default class ConversationsFetcher {
             'x-pm-session': sessionId
         }
         this._privateKey = privateKey;
+        this._logger = logger;
     }
-    async getConversationsList(): Promise<any> {
-        const url = `${ConversationsFetcher.BASE_URL}/conversations?Label=6&Limit=10&Page=0`;
+    async getConversationsInPage(page: number): Promise<any> {
+        const url = `${ConversationsFetcher.BASE_URL}/conversations?Label=6&Limit=10000&Page=${page}`;
         const result = await fetch(url, { headers: this._headers });
-        return await result.json();
+        const convList = await result.json();
+        return convList.Conversations;
+    }
+    async getConversations(): Promise<Array<any>> {
+        const conversations: Array<any> = [];
+        for (let page = 0; page < 5; page++) {
+            this._logger(`Fetching conversations in page ${page}...`);
+            conversations.push(... await this.getConversationsInPage(page));
+        }
+        return conversations;
     }
     async populateConversation(conversation: any): Promise<any> {
+        this._logger(`Populating conversation ${conversation.ID}...`);
         const url = `${ConversationsFetcher.BASE_URL}/conversations/${conversation.ID}`;
         const result = await fetch(url, { headers: this._headers });
         const newConversation = await result.json();

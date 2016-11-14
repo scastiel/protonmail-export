@@ -4,13 +4,16 @@ import fs from 'fs-promise';
 import ConversationFetcher from './ConversationFetcher';
 
 export default class Exporter {
+    _logger: (msg: string) => any;
     conversationFetcher: ConversationFetcher;
-    constructor(conversationFetcher: ConversationFetcher) {
+    constructor(conversationFetcher: ConversationFetcher, logger: (msg: string) => any) {
         this.conversationFetcher = conversationFetcher;
+        this._logger = logger;
     }
-    async exportEmails(outputDirectory: string, number: number = 10) {
-        const conversationsList = await this.conversationFetcher.getConversationsList();
-        for (let conversation of conversationsList.Conversations.slice(0, number)) {
+    async exportEmails(outputDirectory: string) {
+        const conversations = await this.conversationFetcher.getConversations();
+        for (let conversation of conversations) {
+            this._logger(`Exporting conversation ${conversation.ID}...`);
             await this.conversationFetcher.populateConversation(conversation);
             const messages = await this.conversationFetcher.getMessagesFromConversation(conversation);
             for (let message of messages) {

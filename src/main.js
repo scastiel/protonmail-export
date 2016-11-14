@@ -76,8 +76,9 @@ async function getParams():
 
 async function main(): Promise<void> {
     const { cookie, sessionId, privateKey, outputDirectory } = await getParams();
-    const conversationFetcher = new ConversationsFetcher(cookie, sessionId, privateKey);
-    const exporter = new Exporter(conversationFetcher);
+    const logger = (msg: string) => console.log(msg);
+    const conversationFetcher = new ConversationsFetcher(cookie, sessionId, privateKey, logger);
+    const exporter = new Exporter(conversationFetcher, logger);
     return await exporter.exportEmails(outputDirectory);
 }
 
