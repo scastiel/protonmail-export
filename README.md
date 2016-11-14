@@ -6,19 +6,21 @@
 - move your e-mails to another mail provider if you're not satisfied with ProtonMail;
 - etc.
 
+Additionaly, I strongly believe that every service on the Internet, no matter how great it is, and especially if you pay for it, should be easy to leave for another.
+
 It's still possible, but you'll be forced to use undocumented ProtonMail API, proceeding by retro-engineering. This small program will make the process very easier for you, although not fully automated.
 
-Of course, I hope that very soon this program won't be necessary anymore because ProtonMail will provide such an option :)
+Of course, I hope that very soon this program won't be necessary anymore because [ProtonMail will provide such an option](https://protonmail.com/support/knowledge-base/export-import-emails/) :)
 
 ## Features
 
 Implemented:
 
-- Export your received e-mails (decrypted) to local [EML](https://en.wikipedia.org/wiki/Email#Filename_extensions) files you can then import in another mail client.
+- Export your e-mails (decrypted) to local [EML](https://en.wikipedia.org/wiki/Email#Filename_extensions) files you can then import in another mail client.
+- Fetches your e-mails from *Inbox*, *Sent* and *Archives* folder.
 
 Not implemented yet:
 
-- Export e-mails stored somewhere else than the *Archive* folder.
 - Export attached files.
 
 ## Installation

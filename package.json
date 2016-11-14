@@ -1,6 +1,6 @@
 {
   "name": "protonmail-export",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "scripts": {
     "build": "flow && rm -Rf dist/* && babel src -d dist"
