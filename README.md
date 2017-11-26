@@ -35,13 +35,15 @@ ProtonMail stores an encrypted version of your private key on its servers. From 
 
 1. Open the ProtonMail app and log out completely. You should now see the login screen.
 2. Open the dev tools of your browser, and the _Network_ tab to see all network calls.
-3. Enter your username and password and click _Login_ button. You won't need to go further.
-4. In the network calls, find the one to “/api/auth”. There may be several ones, be sure to pick the one with “POST” request method, not the “DELETE” one (which doesn't contain any info anyway).
-5. In this network call, open the *Response* tab to see raw data returned from the server, find the line beginning with `"PrivateKey":`, and copy the rest of the line, from `"-----BEGIN PGP PRIVATE KEY` to the last `"`, without the trailing comma.
-6. Open the *Console* tab of the dev tools, type `console.log(<PASTE THE COPIED CONTENT HERE>)` then press enter.
-7. Copy the result of the command, and put it into a text file, that's it you have your private key!
+3. Enter your username and password and click _Login_ button.
+4. In the network calls, find the one to “/api/auth”.
+5. In this network call, open the *Response* tab to see raw data returned from the server, find the line beginning with `"KeySalt":` and copy the value without quotes to a file.
+6. Find a post call to “/api/users”, there will be a section with addresses, find sections starting with `"PrivateKey":`, and copy the rest of the line, from `"-----BEGIN PGP PRIVATE KEY` to the last `"`, without the trailing comma.
+7. Open the *Console* tab of the dev tools, type `console.log(<PASTE THE COPIED CONTENT HERE>)` then press enter.
+8. Copy the result of the command, and put it into a text file, that's it you have your private key!
+9. Repeat points 6-8 for all addresses to get all your private keys
 
-Note that the private key is encrypted with your ProtonMail's account's secret passphrase (the one you enter after login, the second password). So the private key you have now is not sufficient to decrypt your mail if someone steals it; however try to keep it somewhere secure ;)
+Note that the private key is encrypted with a passphrase that is generated from key salt and your ProtonMail's account's password. So the private key you have now is not sufficient to decrypt your mail if someone steals it; however try to keep it somewhere secure ;). If you want to use the key elsewhere, you can use [pmpkpe](https://github.com/kantium/pmpkpe) to get the passphrase and import into your gpg keychain.
 
 ## How to export your e-mails?
 
