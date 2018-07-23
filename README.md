@@ -1,5 +1,7 @@
 # Export your ProtonMail e-mails
 
+> **Disclaimer: this repository is not maintained anymore! Now [ProtonMail Bridge](https://protonmail.com/bridge/) is is easiest way to export all your e-mails using IMAP.**
+
 [ProtonMail](https://protonmail.com/) does not provide (yet) a way to export your e-mails, like an IMAP access or any export option. That would be very nice, for several usages:
 
 - back up your e-mails, in case of a massive nuclear explosion near ProtonMail's servers;
